@@ -36,7 +36,7 @@ jobs:
       - name: Build, Tag, and Push MySQL Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  # Use the output from the login step
-          ECR_REPOSITORY: sql-image  # Define your repository name
+          ECR_REPOSITORY: mysql-image-repo  # Define your repository name
           IMAGE_TAG: latest  # Define your image tag
         run: |
           cd database
@@ -48,7 +48,7 @@ jobs:
       - name: Build, Tag, and Push Application Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  # Use the output from the login step
-          ECR_REPOSITORY: app-image  # Define your repository name
+          ECR_REPOSITORY: app-image-repo  # Define your repository name
           IMAGE_TAG: latest  # Define your image tag
         run: |
           cd app  # Change to the 'app' directory
