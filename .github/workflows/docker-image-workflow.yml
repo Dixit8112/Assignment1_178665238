@@ -19,7 +19,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}  # Include session token
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
           
     # Step 3: Login to Amazon ECR and Capture Registry URI
@@ -29,15 +29,15 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}  # Include session token if applicable
-          AWS_REGION: us-east-1  # Ensure this is set correctly
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}  
+          AWS_REGION: us-east-1  
           
     # Step 4: Build, Tag, and Push MySQL Docker Image
       - name: Build, Tag, and Push MySQL Docker Image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  # Use the output from the login step
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  
           ECR_REPOSITORY: mysql-image-repo  # Define your repository name
-          IMAGE_TAG: latest  # Define your image tag
+          IMAGE_TAG: updated 
         run: |
           cd mysql
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
