@@ -24,7 +24,7 @@ jobs:
           
     # Step 3: Login to Amazon ECR and Capture Registry URI
       - name: Login to Amazon ECR
-        id: login-ecr  # ID to reference outputs from this step
+        id: login-ecr  
         uses: aws-actions/amazon-ecr-login@v1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -36,7 +36,7 @@ jobs:
       - name: Build, Tag, and Push MySQL Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  
-          ECR_REPOSITORY: mysql-image-repo  # Define your repository name
+          ECR_REPOSITORY: image-mysql-repo
           IMAGE_TAG: updated 
         run: |
           cd mysql
@@ -47,10 +47,10 @@ jobs:
   # Step 5: Build, Tag, and Push Application Docker Image
       - name: Build, Tag, and Push Application Docker Image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  # Use the output from the login step
-          ECR_REPOSITORY: app-image-repo  # Define your repository name
-          IMAGE_TAG: latest  # Define your image tag
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}  
+          ECR_REPOSITORY: image-app-repo  
+          IMAGE_TAG: updated  
         run: |
-          cd Application  # Change to the 'app' directory
+          cd Application  
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
